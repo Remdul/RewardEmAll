@@ -1,6 +1,6 @@
 name: RewardEmAll
 main: com.undergroundminer.remdul.rewardemall.RewardEmAll
-version: 1.0
+version: 1.0.112
 authors: [remdul]
 website: http://dev.bukkit.org/server-mods/RewardEmAll
 description: Rewards For Players
@@ -8,7 +8,7 @@ commands:
   Rea:
     description: Reward Em' All!
     usage: /Rea help
-
+softdepend: [Vault]
 permissions:
     rea.*:
         description: Gives access to all RewardEmAll Commands

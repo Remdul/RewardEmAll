@@ -3,7 +3,7 @@ package com.undergroundminer.remdul.rewardemall;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
-
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
@@ -17,20 +17,28 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class RewardEmAll extends JavaPlugin implements Listener {
+public class RewardEmAll extends JavaPlugin implements Listener
+{
 
 	static String maindir = "Plugins/RewardEmAll/";
 	static File config = new File(maindir + "config.yml");
 
-	public void onEnable() {
+	public static Permission permission = null;
+
+	public void onEnable()
+	{
 		getServer().getPluginManager().registerEvents(this, this);
+		setupPermissions();
 		new File(maindir).mkdir();
-		if (!config.exists()) {
-			try {
+		if (!config.exists())
+		{
+			try
+			{
 				config.createNewFile();
 				this.getConfig().set("XPTotal", 1000);
 				this.getConfig().set("FoodTotal", 20);
@@ -38,7 +46,9 @@ public class RewardEmAll extends JavaPlugin implements Listener {
 				this.getConfig().set("CookieTotal", 64);
 				this.getConfig().set("CookieName", "Remdul's Amazing Cookie");
 				this.saveConfig();
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				e.printStackTrace();
 			}
 			saveDefaultConfig();
@@ -46,62 +56,109 @@ public class RewardEmAll extends JavaPlugin implements Listener {
 	}
 
 	@Override
-	public void onDisable() {
+	public void onDisable()
+	{
 		this.saveConfig();
 	}
 
+	private boolean setupPermissions()
+	{
+		RegisteredServiceProvider<Permission> permissionProvider = getServer()
+				.getServicesManager().getRegistration(
+						net.milkbowl.vault.permission.Permission.class);
+		if (permissionProvider != null)
+		{
+			permission = permissionProvider.getProvider();
+		}
+		return (permission != null);
+	}
+
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
-			String[] args) {
+			String[] args)
+	{
 		int xptotal = getConfig().getInt("XPTotal");
 		int healtotal = getConfig().getInt("HealTotal");
 		int foodtotal = getConfig().getInt("FoodTotal");
 		int cookietotal = getConfig().getInt("CookieTotal");
 		String cookiename = getConfig().getString("CookieName");
 
-		if (args.length == 0) {
-			if (args[0].equalsIgnoreCase("rea")) {
-				if (args[1].equalsIgnoreCase("Heal")
-						&& sender.hasPermission("rea.heal")) {
-					for (Player player : getServer().getOnlinePlayers()) {
+		if (args.length > 1)
+		{
+			sender.sendMessage("Too many commands. Please refer to: /rea help");
+			return true;
+		}
+		else if (args.length == 0)
+		{
+			sender.sendMessage("Not Enough Commands. Please refer to: /rea help");
+			return true;
+		}
+		else if (args.length == 1)
+		{
+			if (cmd.getName().equalsIgnoreCase("rea"))
+			{
+				if (args[0].equalsIgnoreCase("Heal")
+						&& permission.has(sender, "rea.heal"))
+				{
+					for (Player player : getServer().getOnlinePlayers())
+					{
 						player.setHealth(healtotal);
 						player.sendMessage(sender.getName()
 								+ " has healed you!");
 					}
 					return true;
-				} else if (args[1].equalsIgnoreCase("Feed")
-						&& sender.hasPermission("rea.feed")) {
-					for (Player player : getServer().getOnlinePlayers()) {
+				}
+				else if (args[0].equalsIgnoreCase("Feed")
+						&& permission.has(sender, "rea.feed"))
+				{
+					for (Player player : getServer().getOnlinePlayers())
+					{
 						player.setFoodLevel(foodtotal);
 						player.sendMessage(sender.getName() + " has fed you!");
 					}
 					return true;
-				} else if (args[1].equalsIgnoreCase("xp")
-						&& sender.hasPermission("rea.xp")) {
-					for (Player player : getServer().getOnlinePlayers()) {
+				}
+				else if (args[0].equalsIgnoreCase("xp")
+						&& permission.has(sender, "rea.xp"))
+				{
+					for (Player player : getServer().getOnlinePlayers())
+					{
 						player.giveExp(xptotal);
 						player.sendMessage(sender.getName() + " has given you "
 								+ xptotal + " experience!");
 					}
 					return true;
-				} else if (args[1].equalsIgnoreCase("Speed")
-						&& sender.hasPermission("rea.speed")) {
-					for (Player player : getServer().getOnlinePlayers()) {
+				}
+				else if (args[0].equalsIgnoreCase("Speed")
+						&& permission.has(sender, "rea.speed"))
+				{
+					for (Player player : getServer().getOnlinePlayers())
+					{
 						player.addPotionEffect(new PotionEffect(
 								PotionEffectType.SPEED, 2000, 2));
 						player.sendMessage(sender.getName()
 								+ " has given you Speeeeeeeeed!");
 					}
 					return true;
-				} else if (args[1].equalsIgnoreCase("help")
-						&& sender.hasPermission("rea.help")) {
-					sender.sendMessage("This is the future help line 1. Blah.");
-					sender.sendMessage("This is the future help line 2. Blah.");
-					sender.sendMessage("This is the future help line 3. Blah.");
-					sender.sendMessage("This is the future help line 4. Blah.");
-					sender.sendMessage("This is the future help line 5. Blah.");
-				} else if (args[1].equalsIgnoreCase("Cookie")
-						&& sender.hasPermission("rea.cookie")) {
-					for (Player player : getServer().getOnlinePlayers()) {
+				}
+				else if (args[0].equalsIgnoreCase("help")
+						&& permission.has(sender, "rea.help"))
+				{
+					sender.sendMessage("Reward Em' All! - Affects Everyone Online!.");
+					sender.sendMessage("+----------------------------------------------+");
+					sender.sendMessage("  /rea help - This Screen");
+					sender.sendMessage("  /rea cookie - Gives everyone cookies");
+					sender.sendMessage("  /rea xp - Gives everyone some xp");
+					sender.sendMessage("  /rea speed - Gives everyone speed");
+					sender.sendMessage("  /rea heal - Heals everyone online");
+					sender.sendMessage("  /rea feed - Feeds everyone online");
+					sender.sendMessage("+----------------------------------------------+");
+					return true;
+				}
+				else if (args[0].equalsIgnoreCase("Cookie")
+						&& permission.has(sender, "rea.cookie"))
+				{
+					for (Player player : getServer().getOnlinePlayers())
+					{
 						ItemStack cookie = new ItemStack(Material.COOKIE,
 								cookietotal);
 						ItemMeta item = cookie.getItemMeta();
@@ -113,9 +170,12 @@ public class RewardEmAll extends JavaPlugin implements Listener {
 								+ "! So Tasty!");
 					}
 					return true;
-				} else if (args[1].equalsIgnoreCase("Fireworks")
-						&& sender.hasPermission("rea.fireworks")) {
-					for (Player player : getServer().getOnlinePlayers()) {
+				}
+				else if (args[0].equalsIgnoreCase("Fireworks")
+						&& permission.has(sender, "rea.fireworks"))
+				{
+					for (Player player : getServer().getOnlinePlayers())
+					{
 						launchFireWorks(player);
 						launchFireWorks(player);
 						launchFireWorks(player);
@@ -125,14 +185,17 @@ public class RewardEmAll extends JavaPlugin implements Listener {
 					}
 					return true;
 				}
-				return false;
+				else
+				{
+					sender.sendMessage("Not a recognized command. Usage: /rea help");
+				}
 			}
-			return false;
 		}
-		return false;
+		return true;
 	}
 
-	public void launchFireWorks(Player player) {
+	public void launchFireWorks(Player player)
+	{
 		Player p = player.getPlayer();
 		Firework fw = (Firework) p.getWorld().spawnEntity(p.getLocation(),
 				EntityType.FIREWORK);
@@ -163,57 +226,75 @@ public class RewardEmAll extends JavaPlugin implements Listener {
 		fw.setFireworkMeta(fwm);
 	}
 
-	private Color getColor(int i) {
+	private Color getColor(int i)
+	{
 		Color c = null;
-		if (i == 1) {
+		if (i == 1)
+		{
 			c = Color.AQUA;
 		}
-		if (i == 2) {
+		if (i == 2)
+		{
 			c = Color.BLACK;
 		}
-		if (i == 3) {
+		if (i == 3)
+		{
 			c = Color.BLUE;
 		}
-		if (i == 4) {
+		if (i == 4)
+		{
 			c = Color.FUCHSIA;
 		}
-		if (i == 5) {
+		if (i == 5)
+		{
 			c = Color.GRAY;
 		}
-		if (i == 6) {
+		if (i == 6)
+		{
 			c = Color.GREEN;
 		}
-		if (i == 7) {
+		if (i == 7)
+		{
 			c = Color.LIME;
 		}
-		if (i == 8) {
+		if (i == 8)
+		{
 			c = Color.MAROON;
 		}
-		if (i == 9) {
+		if (i == 9)
+		{
 			c = Color.NAVY;
 		}
-		if (i == 10) {
+		if (i == 10)
+		{
 			c = Color.OLIVE;
 		}
-		if (i == 11) {
+		if (i == 11)
+		{
 			c = Color.ORANGE;
 		}
-		if (i == 12) {
+		if (i == 12)
+		{
 			c = Color.PURPLE;
 		}
-		if (i == 13) {
+		if (i == 13)
+		{
 			c = Color.RED;
 		}
-		if (i == 14) {
+		if (i == 14)
+		{
 			c = Color.SILVER;
 		}
-		if (i == 15) {
+		if (i == 15)
+		{
 			c = Color.TEAL;
 		}
-		if (i == 16) {
+		if (i == 16)
+		{
 			c = Color.WHITE;
 		}
-		if (i == 17) {
+		if (i == 17)
+		{
 			c = Color.YELLOW;
 		}
 		return c;
