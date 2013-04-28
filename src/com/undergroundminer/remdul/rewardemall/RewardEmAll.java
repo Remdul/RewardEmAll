@@ -3,8 +3,11 @@ package com.undergroundminer.remdul.rewardemall;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Color;
+import org.bukkit.ChatColor;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Material;
@@ -29,11 +32,13 @@ public class RewardEmAll extends JavaPlugin implements Listener
 	static File config = new File(maindir + "config.yml");
 
 	public static Permission permission = null;
+	public static Chat chat = null;
 
 	public void onEnable()
 	{
 		getServer().getPluginManager().registerEvents(this, this);
 		setupPermissions();
+		setupChat();
 		new File(maindir).mkdir();
 		if (!config.exists())
 		{
@@ -60,6 +65,10 @@ public class RewardEmAll extends JavaPlugin implements Listener
 	{
 		this.saveConfig();
 	}
+	public static String translateColor(String input)
+	{
+		return input = ChatColor.translateAlternateColorCodes('&', input);
+	}
 
 	private boolean setupPermissions()
 	{
@@ -72,6 +81,13 @@ public class RewardEmAll extends JavaPlugin implements Listener
 		}
 		return (permission != null);
 	}
+	private boolean setupChat()
+	{
+		RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager()
+				.getRegistration(Chat.class);
+		chat = rsp.getProvider();
+		return chat != null;
+	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args)
@@ -80,16 +96,18 @@ public class RewardEmAll extends JavaPlugin implements Listener
 		int healtotal = getConfig().getInt("HealTotal");
 		int foodtotal = getConfig().getInt("FoodTotal");
 		int cookietotal = getConfig().getInt("CookieTotal");
+		Player p = (Player) sender;
 		String cookiename = getConfig().getString("CookieName");
+		String pprefix = chat.getPlayerPrefix(p.getWorld(), p.getName());
 
 		if (args.length > 1)
 		{
-			sender.sendMessage("Too many commands. Please refer to: /rea help");
+			sender.sendMessage("Too many Arguments. Please refer to: /rea help");
 			return true;
 		}
 		else if (args.length == 0)
 		{
-			sender.sendMessage("Not Enough Commands. Please refer to: /rea help");
+			sender.sendMessage("Not Enough Arguments. Please refer to: /rea help");
 			return true;
 		}
 		else if (args.length == 1)
@@ -102,8 +120,8 @@ public class RewardEmAll extends JavaPlugin implements Listener
 					for (Player player : getServer().getOnlinePlayers())
 					{
 						player.setHealth(healtotal);
-						player.sendMessage(sender.getName()
-								+ " has healed you!");
+						player.sendMessage(translateColor(pprefix)
+								+ sender.getName() + " has healed you!");
 					}
 					return true;
 				}
@@ -113,7 +131,8 @@ public class RewardEmAll extends JavaPlugin implements Listener
 					for (Player player : getServer().getOnlinePlayers())
 					{
 						player.setFoodLevel(foodtotal);
-						player.sendMessage(sender.getName() + " has fed you!");
+						player.sendMessage(translateColor(pprefix)
+								+ sender.getName() + " has fed you!");
 					}
 					return true;
 				}
@@ -123,7 +142,8 @@ public class RewardEmAll extends JavaPlugin implements Listener
 					for (Player player : getServer().getOnlinePlayers())
 					{
 						player.giveExp(xptotal);
-						player.sendMessage(sender.getName() + " has given you "
+						player.sendMessage(translateColor(pprefix)
+								+ sender.getName() + " has given you "
 								+ xptotal + " experience!");
 					}
 					return true;
@@ -135,7 +155,8 @@ public class RewardEmAll extends JavaPlugin implements Listener
 					{
 						player.addPotionEffect(new PotionEffect(
 								PotionEffectType.SPEED, 2000, 2));
-						player.sendMessage(sender.getName()
+						player.sendMessage(translateColor(pprefix)
+								+ sender.getName()
 								+ " has given you Speeeeeeeeed!");
 					}
 					return true;
@@ -143,15 +164,26 @@ public class RewardEmAll extends JavaPlugin implements Listener
 				else if (args[0].equalsIgnoreCase("help")
 						&& permission.has(sender, "rea.help"))
 				{
-					sender.sendMessage("Reward Em' All! - Affects Everyone Online!.");
-					sender.sendMessage("+----------------------------------------------+");
-					sender.sendMessage("  /rea help - This Screen");
-					sender.sendMessage("  /rea cookie - Gives everyone cookies");
-					sender.sendMessage("  /rea xp - Gives everyone some xp");
-					sender.sendMessage("  /rea speed - Gives everyone speed");
-					sender.sendMessage("  /rea heal - Heals everyone online");
-					sender.sendMessage("  /rea feed - Feeds everyone online");
-					sender.sendMessage("+----------------------------------------------+");
+					sender.sendMessage(ChatColor.YELLOW
+							+ "Reward Em' All! - Affects Everyone Online!.");
+					sender.sendMessage(ChatColor.BLUE
+							+ "+----------------------------------------------+");
+					sender.sendMessage(ChatColor.DARK_GRAY
+							+ "  /rea help - This Screen");
+					sender.sendMessage(ChatColor.DARK_GRAY
+							+ "  /rea cookie - Gives everyone cookies");
+					sender.sendMessage(ChatColor.DARK_GRAY
+							+ "  /rea xp - Gives everyone some xp");
+					sender.sendMessage(ChatColor.DARK_GRAY
+							+ "  /rea speed - Gives everyone speed");
+					sender.sendMessage(ChatColor.DARK_GRAY
+							+ "  /rea heal - Heals everyone online");
+					sender.sendMessage(ChatColor.DARK_GRAY
+							+ "  /rea feed - Feeds everyone online");
+					sender.sendMessage(ChatColor.DARK_GRAY
+							+ "  /rea fireworks - No better way to celebrate!");
+					sender.sendMessage(ChatColor.BLUE
+							+ "+----------------------------------------------+");
 					return true;
 				}
 				else if (args[0].equalsIgnoreCase("Cookie")
@@ -165,9 +197,9 @@ public class RewardEmAll extends JavaPlugin implements Listener
 						item.setDisplayName(cookiename);
 						cookie.setItemMeta(item);
 						player.getInventory().addItem(cookie);
-						player.sendMessage(sender.getName()
-								+ " has given you some " + cookiename
-								+ "! So Tasty!");
+						player.sendMessage(translateColor(pprefix)
+								+ sender.getName() + " has given you some "
+								+ cookiename + "! So Tasty!");
 					}
 					return true;
 				}
@@ -180,7 +212,8 @@ public class RewardEmAll extends JavaPlugin implements Listener
 						launchFireWorks(player);
 						launchFireWorks(player);
 						launchFireWorks(player);
-						player.sendMessage(sender.getName()
+						player.sendMessage(translateColor(pprefix)
+								+ sender.getName()
 								+ " celebrates with Fireworks!");
 					}
 					return true;
