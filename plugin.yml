@@ -7,22 +7,22 @@ description: Rewards For Players
 commands:
   ReaHeal:
     description: Heals Everyone on the Server! Yay!
-    usage: /ReaHeal
+    usage: /Rea Heal
   ReaFeed:
     description: Feeds Everyone on the Server! Yay!
-    usage: /ReaFeed
+    usage: /Rea Feed
   ReaXp:
     description: Gives every player online 1,000 xp!
-    usage: /ReaXp
+    usage: /Rea Xp
   ReaSpeed:
     description: Gives every player Speed Bonus!
-    usage: /ReaSpeed
+    usage: /Rea Speed
   ReaCookie:
     description: Gives every player a stack of cookies!
-    usage: /ReaCookie
+    usage: /Rea Cookie
   ReaFireworks:
     description: Launches Fireworks above players heads!
-    usage: /ReaFireworks
+    usage: /Rea Fireworks
 permissions:
     rea.*:
         description: Gives access to all RewardEmAll Commands
