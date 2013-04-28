@@ -20,6 +20,9 @@ commands:
   ReaCookie:
     description: Gives every player a stack of cookies!
     usage: /ReaCookie
+  ReaFireworks:
+    description: Launches Fireworks above players heads!
+    usage: /ReaFireworks
 permissions:
     rea.*:
         description: Gives access to all RewardEmAll Commands
@@ -29,6 +32,7 @@ permissions:
             rea.speed: true
             rea.xp: true
             rea.cookie: true
+            rea.fireworks: true
     rea.heal:
         description: Allows you to heal everyone
         default: op
@@ -43,4 +47,7 @@ permissions:
         default: op
     rea.cookie:
         description: Allows you to give every player a stack of cookies
+        default: op
+    rea.fireworks:
+        description: Launches Fireworks above players heads!
         default: op
