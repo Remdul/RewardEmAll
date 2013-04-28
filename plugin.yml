@@ -1,0 +1,46 @@
+name: RewardEmAll
+main: com.undergroundminer.remdul.rewardemall.RewardEmAll
+version: 1.0
+authors: [remdul]
+website: http://dev.bukkit.org/server-mods/RewardEmAll
+description: Rewards For Players
+commands:
+  ReaHeal:
+    description: Heals Everyone on the Server! Yay!
+    usage: /ReaHeal
+  ReaFeed:
+    description: Feeds Everyone on the Server! Yay!
+    usage: /ReaFeed
+  ReaXp:
+    description: Gives every player online 1,000 xp!
+    usage: /ReaXp
+  ReaSpeed:
+    description: Gives every player Speed Bonus!
+    usage: /ReaSpeed
+  ReaCookie:
+    description: Gives every player a stack of cookies!
+    usage: /ReaCookie
+permissions:
+    rea.*:
+        description: Gives access to all RewardEmAll Commands
+        children:
+            rea.heal: true
+            rea.feed: true
+            rea.speed: true
+            rea.xp: true
+            rea.cookie: true
+    rea.heal:
+        description: Allows you to heal everyone
+        default: op
+    rea.feed:
+        description: Allows you to feed everyone
+        default: op
+    rea.speed:
+        description: Allows you to give players speed
+        default: op
+    rea.xp:
+        description: Allows you to Give 1,000 xp to players
+        default: op
+    rea.cookie:
+        description: Allows you to give every player a stack of cookies
+        default: op
