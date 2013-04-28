@@ -5,24 +5,10 @@ authors: [remdul]
 website: http://dev.bukkit.org/server-mods/RewardEmAll
 description: Rewards For Players
 commands:
-  ReaHeal:
-    description: Heals Everyone on the Server! Yay!
-    usage: /Rea Heal
-  ReaFeed:
-    description: Feeds Everyone on the Server! Yay!
-    usage: /Rea Feed
-  ReaXp:
-    description: Gives every player online 1,000 xp!
-    usage: /Rea Xp
-  ReaSpeed:
-    description: Gives every player Speed Bonus!
-    usage: /Rea Speed
-  ReaCookie:
-    description: Gives every player a stack of cookies!
-    usage: /Rea Cookie
-  ReaFireworks:
-    description: Launches Fireworks above players heads!
-    usage: /Rea Fireworks
+  Rea:
+    description: Reward Em' All!
+    usage: /Rea help
+
 permissions:
     rea.*:
         description: Gives access to all RewardEmAll Commands
@@ -33,6 +19,7 @@ permissions:
             rea.xp: true
             rea.cookie: true
             rea.fireworks: true
+            rea.help: true
     rea.heal:
         description: Allows you to heal everyone
         default: op
@@ -50,4 +37,7 @@ permissions:
         default: op
     rea.fireworks:
         description: Launches Fireworks above players heads!
+        default: op
+    rea.help:
+        description: Help for the RewardEmAll Commands
         default: op

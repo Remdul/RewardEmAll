@@ -92,6 +92,13 @@ public class RewardEmAll extends JavaPlugin implements Listener {
 								+ " has given you Speeeeeeeeed!");
 					}
 					return true;
+				} else if (args[1].equalsIgnoreCase("help")
+						&& sender.hasPermission("rea.help")) {
+					sender.sendMessage("This is the future help line 1. Blah.");
+					sender.sendMessage("This is the future help line 2. Blah.");
+					sender.sendMessage("This is the future help line 3. Blah.");
+					sender.sendMessage("This is the future help line 4. Blah.");
+					sender.sendMessage("This is the future help line 5. Blah.");
 				} else if (args[1].equalsIgnoreCase("Cookie")
 						&& sender.hasPermission("rea.cookie")) {
 					for (Player player : getServer().getOnlinePlayers()) {
