@@ -67,69 +67,84 @@ public class RewardEmAll extends JavaPlugin implements Listener
     	String cookiename = getConfig().getString("CookieName");
 
 		
-    	if(cmd.getName().equalsIgnoreCase("ReaHeal") && sender.hasPermission("rea.heal")) 
-        {
-    		for(Player player: getServer().getOnlinePlayers())
-    		{
-			player.setHealth(healtotal);
-			player.sendMessage(sender.getName()+" has healed you!");
-        	}
-		return true;
-        } 
-    	else if(cmd.getName().equalsIgnoreCase("ReaFeed") && sender.hasPermission("rea.feed"))
+    	if(args.length == 0) 
     	{
-    		for(Player player: getServer().getOnlinePlayers())
-    		{
-			player.setFoodLevel(foodtotal);
-    	    		player.sendMessage(sender.getName()+" has fed you!");
-        	}
-        	return true;
+			if(args[0].equalsIgnoreCase("rea")) 
+			{
+        		if(args[1].equalsIgnoreCase("Heal") && sender.hasPermission("rea.heal")) 
+				{
+            		for(Player player: getServer().getOnlinePlayers())
+            		{
+            			player.setHealth(healtotal);
+            			player.sendMessage(sender.getName()+" has healed you!");
+                	}
+            		return true;
+				}
+            	else if(args[1].equalsIgnoreCase("Feed") && sender.hasPermission("rea.feed"))
+            	{
+            		for(Player player: getServer().getOnlinePlayers())
+            		{
+            			player.setFoodLevel(foodtotal);
+            	    	player.sendMessage(sender.getName()+" has fed you!");
+                	}
+            		return true;
+            	}
+            	else if(args[1].equalsIgnoreCase("xp") && sender.hasPermission("rea.xp"))
+            	{
+            		for(Player player: getServer().getOnlinePlayers())
+            		{
+            			player.giveExp(xptotal);
+            	    	player.sendMessage(sender.getName()+" has given you "+xptotal+" experience!");
+                	}
+                	return true;
+            	}
+            	else if(args[1].equalsIgnoreCase("Speed") && sender.hasPermission("rea.speed"))
+            	{
+            		for(Player player: getServer().getOnlinePlayers())
+            		{
+            			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2000, 2));
+            	    	player.sendMessage(sender.getName()+" has given you Speeeeeeeeed!");
+                	}
+                	return true;
+            	}
+            	else if(args[1].equalsIgnoreCase("Cookie") && sender.hasPermission("rea.cookie"))
+                {
+            		for(Player player: getServer().getOnlinePlayers())
+            		{
+                        ItemStack cookie = new ItemStack(Material.COOKIE, cookietotal);
+                        ItemMeta item = cookie.getItemMeta();
+                        item.setDisplayName(cookiename);
+                        cookie.setItemMeta(item);
+                        player.getInventory().addItem(cookie);
+        	    		player.sendMessage(sender.getName()+" has given you some "+cookiename+"! So Tasty!");
+            		}
+            		return true;
+                }
+            	else if(args[1].equalsIgnoreCase("Fireworks") && sender.hasPermission("rea.fireworks"))
+                {
+            		for(Player player: getServer().getOnlinePlayers())
+            		{
+            			launchFireWorks(player);
+            			launchFireWorks(player);
+            			launchFireWorks(player);
+            			launchFireWorks(player);
+            			player.sendMessage(sender.getName()+" celebrates with Fireworks!");
+            		}
+            		return true;
+                }
+        		return false;
+			}
+			return false;
     	}
-    	else if(cmd.getName().equalsIgnoreCase("Reaxp") && sender.hasPermission("rea.xp"))
-    	{
-    		for(Player player: getServer().getOnlinePlayers())
-    		{
-			player.giveExp(xptotal);
-    	    		player.sendMessage(sender.getName()+" has given you "+xptotal+" experience!");
-        	}
-        	return true;
-    	}	
-    	else if(cmd.getName().equalsIgnoreCase("ReaSpeed") && sender.hasPermission("rea.speed"))
-    	{
-    		for(Player player: getServer().getOnlinePlayers())
-    		{
-    		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2000, 2));
-    	    		player.sendMessage(sender.getName()+" has given you Speeeeeeeeed!");
-        	}
-        	return true;
-    	}
-    	else if(cmd.getName().equalsIgnoreCase("ReaCookie") && sender.hasPermission("rea.cookie"))
-        {
-    		for(Player player: getServer().getOnlinePlayers())
-    		{
-                ItemStack cookie = new ItemStack(Material.COOKIE, cookietotal);
-                ItemMeta item = cookie.getItemMeta();
-                item.setDisplayName(cookiename);
-                cookie.setItemMeta(item);
-                player.getInventory().addItem(cookie);
-	    		player.sendMessage(sender.getName()+" has given you some "+cookiename+"! So Tasty!");
-    		}
-    		return true;
-        }
-    	else if(cmd.getName().equalsIgnoreCase("ReaFireworks") && sender.hasPermission("rea.fireworks"))
-        {
-    		for(Player player: getServer().getOnlinePlayers())
-    		{
-    			launchFireWorks(player);
-    			launchFireWorks(player);
-    			launchFireWorks(player);
-    			launchFireWorks(player);
-    			player.sendMessage(sender.getName()+" celebrates with Fireworks!");
-    		}
-    		return true;
-        }
-        return false;
-    }
+    	return false;
+  	}
+    		
+
+
+
+
+
+
     
     public void launchFireWorks(Player player) 
     {               
