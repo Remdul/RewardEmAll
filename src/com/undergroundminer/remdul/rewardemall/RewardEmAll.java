@@ -30,6 +30,12 @@ public class RewardEmAll extends JavaPlugin implements Listener
 			try
 			{
 				config.createNewFile();
+				this.getConfig().set("XPTotal", 1000);
+				this.getConfig().set("FoodTotal", 20);
+				this.getConfig().set("HealTotal", 20);
+				this.getConfig().set("CookieTotal", 64);
+				this.getConfig().set("CookieName", "Remdul's Amazing Cookie");
+				this.saveConfig();
 			}
 			catch (IOException e)
 			{
@@ -51,6 +57,7 @@ public class RewardEmAll extends JavaPlugin implements Listener
     	int healtotal = getConfig().getInt("HealTotal");
     	int foodtotal = getConfig().getInt("FoodTotal");
     	int cookietotal = getConfig().getInt("CookieTotal");
+    	String cookiename = getConfig().getString("CookieName");
 
 		
     	if(cmd.getName().equalsIgnoreCase("ReaHeal") && sender.hasPermission("rea.heal")) 
@@ -95,7 +102,7 @@ public class RewardEmAll extends JavaPlugin implements Listener
     		{
                 ItemStack cookie = new ItemStack(Material.COOKIE, cookietotal);
                 ItemMeta item = cookie.getItemMeta();
-                item.setDisplayName("Remdul's Amazing Cookie");
+                item.setDisplayName(cookiename);
                 cookie.setItemMeta(item);
                 player.getInventory().addItem(cookie);
     		}
