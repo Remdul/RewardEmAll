@@ -136,28 +136,25 @@ public class RewardEmAll extends JavaPlugin implements Listener
     public void launchFireWorks(Player player) 
     {               
         Player p = player.getPlayer();
-        if (p.hasPermission("firework.level"))
-        {
-            Firework fw = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
-            FireworkMeta fwm = fw.getFireworkMeta();
-            Random r = new Random();   
-            int rt = r.nextInt(5) + 1;
-            Type type = Type.BALL;       
-            if (rt == 1) type = Type.BALL;
-            if (rt == 2) type = Type.BALL_LARGE;
-            if (rt == 3) type = Type.BURST;
-            if (rt == 4) type = Type.CREEPER;
-            if (rt == 5) type = Type.STAR;  
-            int r1i = r.nextInt(17) + 1;
-            int r2i = r.nextInt(17) + 1;
-            Color c1 = getColor(r1i);
-            Color c2 = getColor(r2i);
-            FireworkEffect effect = FireworkEffect.builder().flicker(r.nextBoolean()).withColor(c1).withFade(c2).with(type).trail(r.nextBoolean()).build();
-            fwm.addEffect(effect);
-            int rp = r.nextInt(2) + 1;
-            fwm.setPower(rp);
-            fw.setFireworkMeta(fwm);           
-        }           
+        Firework fw = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
+        FireworkMeta fwm = fw.getFireworkMeta();
+        Random r = new Random();   
+        int rt = r.nextInt(5) + 1;
+        Type type = Type.BALL;       
+        if (rt == 1) type = Type.BALL;
+        if (rt == 2) type = Type.BALL_LARGE;
+        if (rt == 3) type = Type.BURST;
+        if (rt == 4) type = Type.CREEPER;
+        if (rt == 5) type = Type.STAR;  
+        int r1i = r.nextInt(17) + 1;
+        int r2i = r.nextInt(17) + 1;
+        Color c1 = getColor(r1i);
+        Color c2 = getColor(r2i);
+        FireworkEffect effect = FireworkEffect.builder().flicker(r.nextBoolean()).withColor(c1).withFade(c2).with(type).trail(r.nextBoolean()).build();
+        fwm.addEffect(effect);
+        int rp = r.nextInt(2) + 1;
+        fwm.setPower(rp);
+        fw.setFireworkMeta(fwm);           
     }
     private Color getColor(int i) 
     {
