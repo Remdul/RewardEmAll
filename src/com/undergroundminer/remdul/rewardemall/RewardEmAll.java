@@ -124,6 +124,7 @@ public class RewardEmAll extends JavaPlugin implements Listener
     			launchFireWorks(player);
     			launchFireWorks(player);
     			launchFireWorks(player);
+    			player.sendMessage(sender.getName()+" celebrates with Fireworks!");
     		}
     		return true;
         }
