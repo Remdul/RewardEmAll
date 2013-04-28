@@ -13,7 +13,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
@@ -131,8 +130,6 @@ public class RewardEmAll extends JavaPlugin implements Listener
         return false;
     }
     
-    
-    @EventHandler
     public void launchFireWorks(Player player) 
     {               
         Player p = player.getPlayer();
@@ -159,59 +156,24 @@ public class RewardEmAll extends JavaPlugin implements Listener
     private Color getColor(int i) 
     {
     	Color c = null;
-    	if(i==1){
-    	c=Color.AQUA;
-    	}
-    	if(i==2){
-    	c=Color.BLACK;
-    	}
-    	if(i==3){
-    	c=Color.BLUE;
-    	}
-    	if(i==4){
-    	c=Color.FUCHSIA;
-    	}
-    	if(i==5){
-    	c=Color.GRAY;
-    	}
-    	if(i==6){
-    	c=Color.GREEN;
-    	}
-    	if(i==7){
-    	c=Color.LIME;
-    	}
-    	if(i==8){
-    	c=Color.MAROON;
-    	}
-    	if(i==9){
-    	c=Color.NAVY;
-    	}
-    	if(i==10){
-    	c=Color.OLIVE;
-    	}
-    	if(i==11){
-    	c=Color.ORANGE;
-    	}
-    	if(i==12){
-    	c=Color.PURPLE;
-    	}
-    	if(i==13){
-    	c=Color.RED;
-    	}
-    	if(i==14){
-    	c=Color.SILVER;
-    	}
-    	if(i==15){
-    	c=Color.TEAL;
-    	}
-    	if(i==16){
-    	c=Color.WHITE;
-    	}
-    	if(i==17){
-    	c=Color.YELLOW;
-    	}
-    	 
+    	if(i==1){c=Color.AQUA;}
+    	if(i==2){c=Color.BLACK;}
+    	if(i==3){c=Color.BLUE;}
+    	if(i==4){c=Color.FUCHSIA;}
+    	if(i==5){c=Color.GRAY;}
+    	if(i==6){c=Color.GREEN;}
+    	if(i==7){c=Color.LIME;}
+    	if(i==8){c=Color.MAROON;}
+    	if(i==9){c=Color.NAVY;}
+    	if(i==10){c=Color.OLIVE;}
+    	if(i==11){c=Color.ORANGE;}
+    	if(i==12){c=Color.PURPLE;}
+    	if(i==13){c=Color.RED;}
+    	if(i==14){c=Color.SILVER;}
+    	if(i==15){c=Color.TEAL;}
+    	if(i==16){c=Color.WHITE;}
+    	if(i==17){c=Color.YELLOW;}
     	return c;
-    	}
+    }
 }
 
