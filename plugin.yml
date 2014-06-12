@@ -1,9 +1,9 @@
 name: RewardEmAll
 main: com.undergroundminer.remdul.rewardemall.RewardEmAll
-version: 1.0.112
+version: 2.0
 authors: [remdul]
 website: http://dev.bukkit.org/server-mods/RewardEmAll
-description: Rewards For Players
+description: Rewards For Every Player Online! Share the wealth.
 commands:
   Rea:
     description: Reward Em' All!
@@ -15,18 +15,20 @@ permissions:
         children:
             rea.heal: true
             rea.feed: true
-            rea.speed: true
+            rea.effect: true
             rea.xp: true
             rea.cookie: true
             rea.fireworks: true
             rea.help: true
+            rea.item: true
+            rea.pay: true
     rea.heal:
         description: Allows you to heal everyone
         default: op
     rea.feed:
         description: Allows you to feed everyone
         default: op
-    rea.speed:
+    rea.effect:
         description: Allows you to give players speed
         default: op
     rea.xp:
@@ -40,4 +42,10 @@ permissions:
         default: op
     rea.help:
         description: Help for the RewardEmAll Commands
+        default: op
+    rea.item:
+        description: Gives everyone however many of an item you specify.
+        default: op
+    rea.pay:
+        description: Gives everyone money, based on your currency.
         default: op

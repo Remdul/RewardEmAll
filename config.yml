@@ -3,3 +3,11 @@ FoodTotal: 20
 HealTotal: 20
 CookieTotal: 64
 CookieName: Remdul's Amazing Cookie
+msgHeal: has healed you!
+msgFeed: has fed you!
+msgXp: has given you some experience!
+msgFireworks: celebrates with Fireworks!
+msgItem: has bestowed a gift on you!
+msgPay: has deepened your pocketbook!
+msgEffect: has given you some exciting boosters!
+msgCookie: has given you some cookies!
